@@ -1,0 +1,81 @@
+@import '../../bower_components/bourbon/app/assets/stylesheets/bourbon';
+@import '../../bower_components/neat/app/assets/stylesheets/neat';
+
+@import '../../bower_components/normalize-css/normalize';
+@import '../../bower_components/fontawesome/scss/font-awesome';
+
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,400i,500,700');
+
+$border-radius: 4px;
+
+@import 'mixins';
+@import 'colors';
+@import 'buttons';
+
+body {
+    color: $color-grey8;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+a {
+    color: $color-purple;
+    padding: .2em 0;
+}
+
+h1 {
+
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 4vw;
+    text-align: center;
+    margin: 0;
+
+    @include small() {
+        font-size: 6vw;
+    }
+
+    .fa-gamepad {
+
+        display: inline-block;
+        height: 1em;
+        width: 1em;
+        color: white;
+        background-color: $color-purple;
+        border-radius: 100%;
+
+        &:before {
+            display: block;
+            transform: scale(0.6) translatey(-.06em);
+        }
+
+    }
+
+}
+
+p {
+    line-height: 1.5em;
+}
+
+.note {
+    color: $color-grey6;
+    font-size: .8em;
+    font-style: italic;
+    margin: 1.25em 0;
+}
+
+.container {
+    margin-bottom: 2em;
+}
+
+.content {
+    @include outer-container;
+    padding: 0 25px;
+}
+
+#header {
+    height: 14vw;
+    line-height: 14vw;
+    margin-bottom: 0;
+}
+
+@import 'game';

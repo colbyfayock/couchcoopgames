@@ -1,0 +1,33 @@
+@mixin hippi() {
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+      only screen and (min--moz-device-pixel-ratio: 1.3),
+      only screen and (-o-min-device-pixel-ratio: #{1.3}/1),
+      only screen and (min-resolution: round(1.3 * 96dpi)),
+      only screen and (min-resolution: 1.3 * 1dppx) {
+    @content;
+  }
+
+}
+
+@mixin small($hippi: false) {
+
+    @if $hippi == true {
+
+        @media ( max-width: 700px ) and ( -webkit-min-device-pixel-ratio: 1.3 ),
+               ( max-width: 700px ) and ( min--moz-device-pixel-ratio: 1.3 ),
+               ( max-width: 700px ) and ( -o-min-device-pixel-ratio: #{1.3}/1 ),
+               ( max-width: 700px ) and ( min-resolution: round(1.3 * 96dpi) ),
+               ( max-width: 700px ) and ( min-resolution: 1.3 * 1dppx ) {
+            @content;
+        }
+
+    } @else {
+
+        @media ( max-width: 700px ) {
+            @content;
+        }
+
+    }
+
+}

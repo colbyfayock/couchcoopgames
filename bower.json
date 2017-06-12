@@ -1,0 +1,11 @@
+{
+  "name": "couchcoopgames",
+  "private": true,
+  "devDependencies": {
+    "bourbon": "~4.2.3",
+    "fontawesome": "~4.7.0",
+    "hippify": "git://github.com/colbyfayock/hippify.git",
+    "neat": "^1.8.0",
+    "normalize-css": "normalize.css#^5.0.0"
+  }
+}

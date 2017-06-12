@@ -1,0 +1,345 @@
+// Set up basic color values
+
+$color-map: (
+
+    white: white,
+    black: black,
+
+    red0: #fac5c2,
+    red1: #f7a8a3,
+    red2: #f58a83,
+    red3: #f26c64,
+    red4: #f04f44,
+    red5: #ed3125,
+    red6: #de1f12,
+    red7: #be1a10,
+    red8: #9f160d,
+    red9: #80120b,
+    red: red5,
+
+    orange0: #ffd8b3,
+    orange1: #ffc791,
+    orange2: #ffb56f,
+    orange3: #ffa44d,
+    orange4: #ff922b,
+    orange5: #ff8109,
+    orange6: #e67000,
+    orange7: #c46000,
+    orange8: #a24f00,
+    orange9: #803f00,
+    orange: orange5,
+
+    yellow0: #ffedc4,
+    yellow1: #ffe2a2,
+    yellow2: #ffd880,
+    yellow3: #ffcd5e,
+    yellow4: #ffc33c,
+    yellow5: #ffb81a,
+    yellow6: #f7aa00,
+    yellow7: #d59300,
+    yellow8: #b37c00,
+    yellow9: #916400,
+    yellow: yellow5,
+
+    green0: #c7eece,
+    green1: #ade6b7,
+    green2: #93dea1,
+    green3: #79d68a,
+    green4: #45c65c,
+    green5: #37b24d,
+    green6: #2f9842,
+    green7: #277e37,
+    green8: #1f642b,
+    green9: #174a20,
+    green: green5,
+
+    teal0: #a7fff7,
+    teal1: #85fff3,
+    teal2: #63fff0,
+    teal3: #41ffed,
+    teal4: #1fffea,
+    teal5: #00fce4,
+    teal6: #00dac5,
+    teal7: #00b8a7,
+    teal8: #009688,
+    teal9: #007469,
+    teal: teal5,
+
+    blue0: #a8cff4,
+    blue1: #8abff0,
+    blue2: #6caeec,
+    blue3: #4e9de8,
+    blue4: #308de4,
+    blue5: #1c7cd6,
+    blue6: #186bb8,
+    blue7: #14599a,
+    blue8: #10487c,
+    blue9: #0c365e,
+    blue: blue5,
+
+    purple0: #c6b4e7,
+    purple1: #b39adf,
+    purple2: #9f80d7,
+    purple3: #8c66cf,
+    purple4: #784dc6,
+    purple5: #673ab7,
+    purple6: #58329d,
+    purple7: #4a2a83,
+    purple8: #3b216a,
+    purple9: #2d1950,
+    purple: purple5,
+
+    pink0: #f8b9ce,
+    pink1: #f59ab9,
+    pink2: #f27ba3,
+    pink3: #ef5c8e,
+    pink4: #ec3d78,
+    pink5: #e91e63,
+    pink6: #d11454,
+    pink7: #b21148,
+    pink8: #930e3b,
+    pink9: #740b2f,
+    pink: pink5,
+
+    grey0: #f8f9fa,
+    grey1: #f1f3f5,
+    grey2: #e9ecef,
+    grey3: #dee2e6,
+    grey4: #ced4da,
+    grey5: #adb5bd,
+    grey6: #868e96,
+    grey7: #495057,
+    grey8: #343a40,
+    grey9: #212529,
+    grey: grey5,
+
+    brown0: #c8ada3,
+    brown1: #bb9a8d,
+    brown2: #af8778,
+    brown3: #a27463,
+    brown4: #8e6455,
+    brown5: #795548,
+    brown6: #64463b,
+    brown7: #4e372f,
+    brown8: #392822,
+    brown9: #241915,
+    brown: brown5,
+
+    primary: purple,
+    secondary: teal,
+
+    alert: orange,
+    alert_text: orange9,
+    alert_background: orange0,
+
+    warning: yellow,
+    warning_text: yellow9,
+    warning_background: yellow0,
+
+    error: red,
+    error_text: red8,
+    error_background: red0,
+
+    success: green,
+    success_text: green8,
+    success_background: green0,
+
+    info: blue,
+    info_text: blue8,
+    info_background: blue0,
+
+);
+
+// @todo - figure out how to make recursion work in SCSS...
+
+@function get_color_value($key) {
+
+    @if map-has-key( $color-map, $key ) {
+
+        @if map-has-key( $color-map, map-get( $color-map, $key ) ) {
+
+            @if map-has-key( $color-map, map-get( $color-map, map-get( $color-map, $key ) ) ) {
+
+                @return map-get( $color-map, map-get( $color-map, map-get( $color-map, $key ) ) );
+
+            } @else {
+                @return map-get( $color-map, map-get($color-map, $key) );
+            }
+
+        } @else {
+            @return map-get( $color-map, $key );
+
+        }
+
+    } @else {
+        @return $key;
+    }
+
+}
+
+
+// If a map exists with user overrides, merge / overwrite values
+
+$settings-colors: false !default;
+
+@if type-of($settings-colors) == map {
+    $color-map: map-merge($color-map, $settings-colors);
+}
+
+
+// Set up variable names for all known color values
+
+$color-pink: get_color_value(pink);
+$color-magenta: get_color_value(magenta);
+$color-purple: get_color_value(purple);
+$color-indigo: get_color_value(indigo);
+$color-cyan: get_color_value(cyan);
+$color-teal: get_color_value(teal);
+$color-teal-light: get_color_value(teal-light);
+$color-yellow: get_color_value(yellow);
+$color-amber: get_color_value(amber);
+$color-orange: get_color_value(orange);
+$color-brown: get_color_value(brown);
+
+$color-red0: get_color_value(red0);
+$color-red1: get_color_value(red1);
+$color-red2: get_color_value(red2);
+$color-red3: get_color_value(red3);
+$color-red4: get_color_value(red4);
+$color-red5: get_color_value(red5);
+$color-red6: get_color_value(red6);
+$color-red7: get_color_value(red7);
+$color-red8: get_color_value(red8);
+$color-red9: get_color_value(red9);
+$color-red: get_color_value(red);
+
+$color-orange0: get_color_value(orange0);
+$color-orange1: get_color_value(orange1);
+$color-orange2: get_color_value(orange2);
+$color-orange3: get_color_value(orange3);
+$color-orange4: get_color_value(orange4);
+$color-orange5: get_color_value(orange5);
+$color-orange6: get_color_value(orange6);
+$color-orange7: get_color_value(orange7);
+$color-orange8: get_color_value(orange8);
+$color-orange9: get_color_value(orange9);
+$color-orange: get_color_value(orange);
+
+$color-yellow0: get_color_value(yellow0);
+$color-yellow1: get_color_value(yellow1);
+$color-yellow2: get_color_value(yellow2);
+$color-yellow3: get_color_value(yellow3);
+$color-yellow4: get_color_value(yellow4);
+$color-yellow5: get_color_value(yellow5);
+$color-yellow6: get_color_value(yellow6);
+$color-yellow7: get_color_value(yellow7);
+$color-yellow8: get_color_value(yellow8);
+$color-yellow9: get_color_value(yellow9);
+$color-yellow: get_color_value(yellow);
+
+$color-green0: get_color_value(green0);
+$color-green1: get_color_value(green1);
+$color-green2: get_color_value(green2);
+$color-green3: get_color_value(green3);
+$color-green4: get_color_value(green4);
+$color-green5: get_color_value(green5);
+$color-green6: get_color_value(green6);
+$color-green7: get_color_value(green7);
+$color-green8: get_color_value(green8);
+$color-green9: get_color_value(green9);
+$color-green: get_color_value(green);
+
+$color-teal0: get_color_value(teal0);
+$color-teal1: get_color_value(teal1);
+$color-teal2: get_color_value(teal2);
+$color-teal3: get_color_value(teal3);
+$color-teal4: get_color_value(teal4);
+$color-teal5: get_color_value(teal5);
+$color-teal6: get_color_value(teal6);
+$color-teal7: get_color_value(teal7);
+$color-teal8: get_color_value(teal8);
+$color-teal9: get_color_value(teal9);
+$color-teal: get_color_value(teal);
+
+$color-blue0: get_color_value(blue0);
+$color-blue1: get_color_value(blue1);
+$color-blue2: get_color_value(blue2);
+$color-blue3: get_color_value(blue3);
+$color-blue4: get_color_value(blue4);
+$color-blue5: get_color_value(blue5);
+$color-blue6: get_color_value(blue6);
+$color-blue7: get_color_value(blue7);
+$color-blue8: get_color_value(blue8);
+$color-blue9: get_color_value(blue9);
+$color-blue: get_color_value(blue);
+
+$color-purple0: get_color_value(purple0);
+$color-purple1: get_color_value(purple1);
+$color-purple2: get_color_value(purple2);
+$color-purple3: get_color_value(purple3);
+$color-purple4: get_color_value(purple4);
+$color-purple5: get_color_value(purple5);
+$color-purple6: get_color_value(purple6);
+$color-purple7: get_color_value(purple7);
+$color-purple8: get_color_value(purple8);
+$color-purple9: get_color_value(purple9);
+$color-purple: get_color_value(purple);
+
+$color-pink0: get_color_value(pink0);
+$color-pink1: get_color_value(pink1);
+$color-pink2: get_color_value(pink2);
+$color-pink3: get_color_value(pink3);
+$color-pink4: get_color_value(pink4);
+$color-pink5: get_color_value(pink5);
+$color-pink6: get_color_value(pink6);
+$color-pink7: get_color_value(pink7);
+$color-pink8: get_color_value(pink8);
+$color-pink9: get_color_value(pink9);
+$color-pink: get_color_value(pink);
+
+$color-grey0: get_color_value(grey0);
+$color-grey1: get_color_value(grey1);
+$color-grey2: get_color_value(grey2);
+$color-grey3: get_color_value(grey3);
+$color-grey4: get_color_value(grey4);
+$color-grey5: get_color_value(grey5);
+$color-grey6: get_color_value(grey6);
+$color-grey7: get_color_value(grey7);
+$color-grey8: get_color_value(grey8);
+$color-grey9: get_color_value(grey9);
+$color-grey: get_color_value(grey);
+
+$color-brown0: get_color_value(brown0);
+$color-brown1: get_color_value(brown1);
+$color-brown2: get_color_value(brown2);
+$color-brown3: get_color_value(brown3);
+$color-brown4: get_color_value(brown4);
+$color-brown5: get_color_value(brown5);
+$color-brown6: get_color_value(brown6);
+$color-brown7: get_color_value(brown7);
+$color-brown8: get_color_value(brown8);
+$color-brown9: get_color_value(brown9);
+$color-brown: get_color_value(brown);
+
+$color-primary: get_color_value(primary);
+$color-secondary: get_color_value(secondary);
+
+$color-alert: get_color_value(alert);
+$color-alert-text: get_color_value(alert_text);
+$color-alert-background: get_color_value(alert_background);
+
+$color-warning: get_color_value(warning);
+$color-warning-text: get_color_value(warning_text);
+$color-warning-background: get_color_value(warning_background);
+
+$color-error: get_color_value(error);
+$color-error-text: get_color_value(error_text);
+$color-error-background: get_color_value(error_background);
+
+$color-success: get_color_value(success);
+$color-success-text: get_color_value(success_text);
+$color-success-background: get_color_value(success_background);
+
+$color-info: get_color_value(info);
+$color-info-text: get_color_value(info_text);
+$color-info-background: get_color_value(info_background);

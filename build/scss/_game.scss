@@ -3,6 +3,8 @@ $size-boxart-gutter: 25px;
 
 .game {
 
+    margin-bottom: 6em;
+
     header {
 
         display: block;
@@ -185,6 +187,28 @@ $size-boxart-gutter: 25px;
 
         @include small(true) {
             background-image: url('https://res.cloudinary.com/fay/image/upload/v1497212364/halo-banner-1400x800_r6pbgm.jpg');
+        }
+
+    }
+
+}
+
+#gears-of-war {
+
+    header {
+
+        background-image: url('https://res.cloudinary.com/fay/image/upload/v1505089801/gears_of_war-banner-1440x400_bs6ob9.jpg');
+
+        @include hippi() {
+            background-image: url('https://res.cloudinary.com/fay/image/upload/v1505089800/gears_of_war-banner-2880x800_ofwiyy.jpg');
+        }
+
+        @include small() {
+            background-image: url('https://res.cloudinary.com/fay/image/upload/v1505089798/gears_of_war-banner-700x400_hxbzdv.jpg');
+        }
+
+        @include small(true) {
+            background-image: url('https://res.cloudinary.com/fay/image/upload/v1505089799/gears_of_war-banner-1400x800_gempev.jpg');
         }
 
     }

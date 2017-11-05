@@ -1,48 +1,13 @@
 module.exports = function(grunt) {
 
-    require('jit-grunt')(grunt);
+    require('jit-grunt')(grunt, {
+        cloudfront: 'grunt-aws'
+    });
 
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
-        env: grunt.file.readJSON('config.json'),
-
-        // concat: {
-
-        //     options: {
-        //         separator: ';',
-        //     },
-
-        //     desktop: {
-        //         src: [
-
-        //             './build/js/lib.js',
-        //             './build/js/components/**/*.js',
-
-        //             './build/js/main.js'
-
-        //         ],
-        //         dest: './content/themes/kim/assets/js/scripts.js',
-        //     },
-
-        // },
-
-        // uglify: {
-        //     options: {
-        //         banner: '/*\n' +
-        //             ' * <%= pkg.name %>\n' +
-        //             ' */\n',
-        //         mangle: false,
-        //         compress: false
-        //     },
-        //     js: {
-        //         files: {
-        //             './content/themes/kim/assets/js/scripts.min.js': [
-        //                 './content/themes/kim/assets/js/scripts.js'
-        //             ]
-        //         }
-        //     }
-        // },
+        config: grunt.file.readJSON('config.json'),
 
         sass: {
 
@@ -127,28 +92,38 @@ module.exports = function(grunt) {
 
         },
 
-        rsync: {
+        aws_s3: {
+
             options: {
-                args: [
-                    "-avhzS --progress"
-                ],
-                exclude: [
-                    ".DS_Store",
-                    ".git*",
-                    "*.scss",
-                    "node_modules",
-                    "bower_components"
-                ],
-                recursive: true
+                accessKeyId: '<%= config.aws.accessKeyId %>',
+                secretAccessKey: '<%= config.aws.secretAccessKey %>',
+                bucket: 'couchcoopgames.com',
+                region: 'us-east-1',
+                differential: true,
+                uploadConcurrency: 5,
+                downloadConcurrency: 5
             },
-            deploy: {
-                options: {
-                    src: '<%= env.rsync.deploy.src %>',
-                    dest: '<%= env.rsync.deploy.dest %>',
-                    host: '<%= env.rsync.deploy.host %>',
-                    delete: false
-                }
+            
+            default: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: './dist',
+                        src: ['**'],
+                        dest: '/'
+                    }
+                ]
             },
+
+        },
+
+        cloudfront: {
+            options: {
+                accessKeyId: '<%= config.aws.accessKeyId %>',
+                secretAccessKey: '<%= config.aws.secretAccessKey %>',
+                distributionId: '<%= config.aws.cloudfrontDistributionId %>'
+            },
+            deafult: {}
         },
 
         watch: {
@@ -158,22 +133,42 @@ module.exports = function(grunt) {
                     'sass:build'
                 ]
             }
-            // js: {
-            //     files: './build/js/**/*.js',
-            //     tasks: [
-            //         'js'
-            //     ]
-            // },
         }
 
     });
 
-    grunt.registerTask('default', []);
+    // Pulls in the changed files from aws_s3 at run time and pass them
+    // into cloudfront invalidation
 
-    // grunt.registerTask('js', [
-    //     'concat',
-    //     'uglify'
-    // ]);
+    grunt.registerTask('invalidate_cache', 'Invalidate Cloudfront from aws_s3 output', function (subtask) {
+
+        var aws_changed = grunt.config.get('aws_s3_changed'),
+            task = 'cloudfront',
+            changed_files;
+
+        if ( !Array.isArray(aws_changed) ) {
+            console.log('Changed files is not an array');
+            return;
+        }
+
+        changed_files = aws_changed.map(function(file) {
+            return '/' + file;
+        });
+
+        if ( subtask ) {
+            task = task + ':' + subtask;
+        }
+
+        grunt.config.set('cloudfront.options.invalidations', changed_files);
+
+        if ( !Array.isArray(changed_files) || changed_files.length === 0 ) {
+            console.log('No files changed');
+            return;
+        }
+
+        grunt.task.run(task);
+
+    });
 
     grunt.registerTask('build', [
         'sass:build',
@@ -188,11 +183,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy', [
         'dist',
-        'rsync:deploy'
-    ]);
-
-    grunt.registerTask('stage', [
-        'rsync:stage'
+        'aws_s3',
+        'invalidate_cache'
     ]);
 
 };

@@ -1,16 +1,9 @@
-@import '../../bower_components/bourbon/app/assets/stylesheets/bourbon';
-@import '../../bower_components/neat/app/assets/stylesheets/neat';
-
-@import '../../bower_components/normalize-css/normalize';
-@import '../../bower_components/fontawesome/scss/font-awesome';
-
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,400i,500,700');
 
 $border-radius: 4px;
 
-@import 'mixins';
-@import 'colors';
-@import 'buttons';
+@import 'settings/__settings';
+@import 'components/__components';
 
 body {
     color: $color-grey8;
@@ -63,19 +56,9 @@ p {
     margin: 1.25em 0;
 }
 
-.container {
-    margin-bottom: 2em;
-}
-
-.content {
-    @include outer-container;
-    padding: 0 25px;
-}
 
 #header {
     height: 14vw;
     line-height: 14vw;
     margin-bottom: 0;
 }
-
-@import 'game';

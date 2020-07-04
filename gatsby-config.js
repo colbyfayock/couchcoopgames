@@ -10,5 +10,14 @@ module.exports = {
         path: `${__dirname}/src/assets/images`,
       },
     },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'Couch Co-Op Games',
+        short_name: 'Couch Co-Op Games',
+        start_url: '/',
+        icon: './src/assets/images/favicon-384x384.png',
+      },
+    },
   ],
 }

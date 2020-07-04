@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import { FaGamepad } from 'react-icons/fa';
 
 import Container from 'components/Container';

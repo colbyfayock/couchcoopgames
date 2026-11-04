@@ -1,0 +1,13 @@
+{
+  "name": "Couch Co-Op Games",
+  "short_name": "Couch Co-Op Games",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/favicon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    }
+  ]
+}

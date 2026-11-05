@@ -1,43 +1,36 @@
 {
-  "name": "gatsby-starter-sass",
-  "description": "A Gatsby starter with Sass and no assumptions",
+  "name": "couchcoopgames",
+  "description": "Awesome local cooperative video games perfect for the couch",
   "version": "0.1.2",
   "author": "Colby Fayock <hello@colbyfayock.com>",
-  "dependencies": {
-    "gatsby": "^2.23.20",
-    "gatsby-plugin-manifest": "^2.4.17",
-    "gatsby-plugin-react-helmet": "^3.3.9",
-    "gatsby-plugin-resolve-src": "^2.1.0",
-    "gatsby-plugin-sass": "^2.3.10",
-    "gatsby-source-filesystem": "^2.3.18",
-    "node-sass": "^4.14.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-helmet": "^6.1.0",
-    "react-icons": "^3.10.0"
+  "devDependencies": {
+    "astro": "7.4.5",
+    "sass": "1.107.1"
   },
-  "devDependencies": {},
+  "resolutions": {
+    "**/anymatch/picomatch": "2.3.2"
+  },
   "keywords": [
-    "gatsby",
+    "astro",
+    "static",
     "sass",
     "scss"
   ],
   "license": "MIT",
   "scripts": {
-    "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
-    "develop": "gatsby develop",
+    "build": "astro build",
+    "develop": "astro dev",
     "lint": "Get started linting your code with Eslint and stylelint",
     "format": "Get started formatting your code with Eslint, Prettier, and stylelint",
     "start": "yarn develop",
-    "serve": "gatsby serve",
-    "test": "echo 'Write tests! -> https://gatsby.dev/unit-testing'"
+    "serve": "astro preview",
+    "test": "echo 'No automated tests are configured'"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/colbyfayock/gatsby-starter-sass"
+    "url": "https://github.com/colbyfayock/couchcoopgames.git"
   },
   "bugs": {
-    "url": "https://github.com/colbyfayock/gatsby-starter-sass/issues"
+    "url": "https://github.com/colbyfayock/couchcoopgames/issues"
   }
 }
